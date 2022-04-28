@@ -11,7 +11,7 @@ export class News extends Component {
         this.state = {
             articals: [],
             loading: true,
-            page: 1
+            page: 1,
         }
         document.title = `Samachar App - ${this.captilizeFirstLater(this.props.category)}`
     }
@@ -20,7 +20,8 @@ export class News extends Component {
         country: 'in',
         category: 'entertainment',
         pageSize: 6,
-        totalResults : 0
+        totalResults : 0,
+        apiKey : ""
     }
 
     static propTypes = {
@@ -67,7 +68,7 @@ export class News extends Component {
 
 
     async updateNews() {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=80a35269e02c47c0a4fee4558a29ecac&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         let data = await fetch(url)
         let parseArticle = await data.json()
@@ -76,18 +77,11 @@ export class News extends Component {
     }
 
 
-    forceUpdate = async() =>{
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=80a35269e02c47c0a4fee4558a29ecac&page=${this.state.page}&pageSize=${this.props.pageSize}`
-        this.setState({ loading: true })
-        let data = await fetch(url)
-        let parseArticle = await data.json()
-        console.log(parseArticle)
-        this.setState({ articals: parseArticle.articles, totalResults: parseArticle.totalResults, loading: false })
-    }
+
 
 
     fetchMoreData = async() => {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=80a35269e02c47c0a4fee4558a29ecac&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
         let data = await fetch(url)
         let parseArticle = await data.json()
